@@ -4,6 +4,9 @@ const $$ = document.querySelectorAll.bind(document)
 
 const songTitle = $('.music-play__info marquee')
 const songSinger = $('.music-play__info .song-item--singer')
+const menuSide = $('.menu-side')
+const btnCloseMenuSide = $('.menu-side__logo i')
+const btnOpenMenuSide = $('.mobile__heading--menu')
 const menuSongPlaylist = $('.menu-side__song')
 const menuSongPlaylistUSUK = $('.menu-side__song.us-uk')
 const menuSongPlaylistEDM = $('.menu-side__song.edm')
@@ -1096,3 +1099,12 @@ var swiper = new Swiper(".mySwiper", {
     },
     speed: 1000,
 });
+
+/*-----RESPONSIVE-----*/
+btnOpenMenuSide.onclick = () => {
+    menuSide.style.width = '100%'
+    menuSide.style.display = 'block'
+}
+btnCloseMenuSide.onclick = () => {
+    menuSide.style.display = 'none'
+}
