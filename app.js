@@ -129,6 +129,7 @@ const app = {
     loadConfiguration: ()=>{
         app.isRandom = app.configuration.isRandom
         app.isRepeat = app.configuration.isRepeat
+        const colors = app.configuration.theme
         if(colors){
             document.documentElement.style.setProperty('--primary-bg', colors.primaryBg)
             document.documentElement.style.setProperty('--menu-side-bg', colors.menuSideBg)
