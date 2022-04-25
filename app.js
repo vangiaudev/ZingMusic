@@ -129,17 +129,18 @@ const app = {
     loadConfiguration: ()=>{
         app.isRandom = app.configuration.isRandom
         app.isRepeat = app.configuration.isRepeat
-//         const colors = app.configuration.theme
-//         document.documentElement.style.setProperty('--primary-bg', colors.primaryBg)
-//         document.documentElement.style.setProperty('--menu-side-bg', colors.menuSideBg)
-//         document.documentElement.style.setProperty('--music-play-bg', colors.musicPlayBg)
-//         document.documentElement.style.setProperty('--theme-modal-bg', colors.themeModalBg)
-//         document.documentElement.style.setProperty('--text-color', colors.textColor)
-//         document.documentElement.style.setProperty('--active-color', colors.activeColor)
-//         document.documentElement.style.setProperty('--none-active-color', colors.noneActiveColor)
-//         document.documentElement.style.setProperty('--border-layout', colors.borderLayout)
-//         document.documentElement.style.setProperty('--background-image', colors.backgroundImage)
-//         document.documentElement.style.setProperty('--sub-text-color', colors.subTextColor)
+        if(colors){
+            document.documentElement.style.setProperty('--primary-bg', colors.primaryBg)
+            document.documentElement.style.setProperty('--menu-side-bg', colors.menuSideBg)
+            document.documentElement.style.setProperty('--music-play-bg', colors.musicPlayBg)
+            document.documentElement.style.setProperty('--theme-modal-bg', colors.themeModalBg)
+            document.documentElement.style.setProperty('--text-color', colors.textColor)
+            document.documentElement.style.setProperty('--active-color', colors.activeColor)
+            document.documentElement.style.setProperty('--none-active-color', colors.noneActiveColor)
+            document.documentElement.style.setProperty('--border-layout', colors.borderLayout)
+            document.documentElement.style.setProperty('--background-image', colors.backgroundImage)
+            document.documentElement.style.setProperty('--sub-text-color', colors.subTextColor)
+        }
     },
     defineProperties: () =>{
         Object.defineProperty(app, 'currentSong', {
