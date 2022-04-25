@@ -1,3 +1,4 @@
+
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
@@ -128,6 +129,17 @@ const app = {
     loadConfiguration: ()=>{
         app.isRandom = app.configuration.isRandom
         app.isRepeat = app.configuration.isRepeat
+        const colors = app.configuration.theme
+        document.documentElement.style.setProperty('--primary-bg', colors.primaryBg)
+        document.documentElement.style.setProperty('--menu-side-bg', colors.menuSideBg)
+        document.documentElement.style.setProperty('--music-play-bg', colors.musicPlayBg)
+        document.documentElement.style.setProperty('--theme-modal-bg', colors.themeModalBg)
+        document.documentElement.style.setProperty('--text-color', colors.textColor)
+        document.documentElement.style.setProperty('--active-color', colors.activeColor)
+        document.documentElement.style.setProperty('--none-active-color', colors.noneActiveColor)
+        document.documentElement.style.setProperty('--border-layout', colors.borderLayout)
+        document.documentElement.style.setProperty('--background-image', colors.backgroundImage)
+        document.documentElement.style.setProperty('--sub-text-color', colors.subTextColor)
     },
     defineProperties: () =>{
         Object.defineProperty(app, 'currentSong', {
@@ -451,7 +463,6 @@ const app = {
             Array.from($$('.personal__song--list-item')).forEach((item)=>{
                 if(item.classList.contains('active')){
                     item.classList.remove('active')
-                    console.log(item);
                     item.firstElementChild.firstElementChild.nextElementSibling.firstElementChild.style.display = 'none'
                     item.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.style.filter = 'brightness(100%)'
                 }
@@ -521,7 +532,8 @@ const app = {
         themeModal.onclick = e => {
             const type = e.target.closest('.theme-modal__content--item').dataset.type
             const indexOfType = e.target.closest('.content__item--theme').dataset.index
-            const colors = themes[type].list[indexOfType].details
+            const colors = themes[type].list[indexOfType].details   
+            app.setConfiguration('theme', colors)
             if(e.target.classList.contains('item__theme--apply')){
                 document.documentElement.style.setProperty('--primary-bg', colors.primaryBg)
                 document.documentElement.style.setProperty('--menu-side-bg', colors.menuSideBg)
@@ -1054,3 +1066,31 @@ menuPlaylist.forEach((menu, index)=>{
         side.classList.add('active')
     }
 })
+
+/*-----AUTO SLIDER-----*/
+var swiper = new Swiper(".mySwiper", {
+    grabCursor: true,
+    effect: "creative",
+    creativeEffect: {
+      prev: {
+        shadow: true,
+        translate: [0, 0, -400],
+      },
+      next: {
+        translate: ["100%", 0, 0],
+      },
+    },
+    loop: true,
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+    },
+    speed: 1000,
+});
