@@ -8,17 +8,18 @@
     <link rel="icon" href="./assets/img/icon_zingmp3.svg" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/custom_button.css" />
+    <link rel="stylesheet" href="./assets/css/responsive.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
     />
-   <link
-  rel="stylesheet"
-  href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
-/>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
 
-<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-    
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <header>
@@ -76,19 +77,19 @@
             </ul>
             <form class="song-side__heading--search">
               <div class="mobile__heading--menu">
-                <i class="bi bi-list"></i>
+                <i class="bi bi-music-note-list"></i>
               </div>
               <div class="mobile__heading--logo">
                 <img 
                   src="./assets/img/logo_name.svg" 
-                  alt="Zing MP3" 
-                  style="width: 120px; margin-left:60px ;">
+                  alt="Zing MP3">
               </div>
               <div class="search__container">
                 <div class="search-btn">
                   <i class="bi bi-search"></i>
                 </div>
                 <input
+                  class="hide-on-mobile-tablet"
                   type="search"
                   name="search-song"
                   id="search-song"
@@ -103,7 +104,7 @@
               <img src="./assets/img/icon_theme.svg" alt="Theme" />
               <span class="tooltip tooltip-bottom">Chủ đề</span>
             </div>
-            <div class="song-side__heading--setting">
+            <div class="song-side__heading--setting hide-on-mobile-tablet">
               <i class="bi bi-gear"></i>
               <span class="tooltip tooltip-bottom">Cài đặt</span>
             </div>
@@ -150,6 +151,40 @@
               </a> -->
             </div>
           </div>
+          <div class="song-side__new-release">
+            <div class="song-side__playlist--popular">
+              <div class="playlist__popular--title">Mới Phát Hành</div>
+            </div>
+            <div class="song-side__playlist--carousel">
+              <div class="swiper swiper__new-release">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                  <!-- Slides -->
+                  <div class="song-side__new-release--item swiper-slide">
+                    <div class="song-side__new-release--thumbnail">
+                      <img src="https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/3/8/f/6/38f6c01056fbbe19ae00c018b8dec874.jpg">
+                      <i class="bi bi-play-circle"></i>
+                    </div>
+                    <div class="song-side__new-release--content">
+                      <div class="new-release__info">
+                        <div class="new-release__info--title">Trai Tài Gái Sắc</div>
+                        <div class="new-release__info--subtitle">NB3 Hoài Bảo</div>
+                      </div>
+                      <div class="new-release__time">
+                        <div class="new-release__time--rank">#1</div>
+                        <div class="new-release__time--date">26.04.2022</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+              </div>
+              
+            </div>
+          </div>
           <div class="song-side__singer">
             <div class="song-side__playlist--popular">
               <div class="playlist__popular--title">Ca Sĩ Nổi Bật</div>
@@ -171,6 +206,88 @@
               </a> -->
             </div>
           </div>
+          <div class="song-side__chart">
+            <div class="song-side__chart--wrapper">
+              <div class="song-side__playlist--popular">
+                <div class="playlist__popular--title">
+                  #ZingChart
+                  <i class="bi bi-play-circle-fill"></i>
+                </div>
+              </div>
+              <div class="song-side__playlist--carousel chart">
+                <div class="chart__legend-box">
+                    <div class="chart__legend-box--item">
+                      <div class="legend-box__item-number">1
+                      </div>
+                      <div class="legend-box__item-song">
+                        <div class="legend-box__item-song--thumbnail">
+                          <img src="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/5/b/8/b/5b8b7cd3d1434afa3b2b9854efdc8756.jpg" width="50px">
+                        </div>
+                        <div class="legend-box__item-song--info">
+                          <div class="song__info-title">
+                            Đám Cưới Nha
+                          </div>
+                          <div class="song__info-subtitle">
+                            Hồng Thanh, DJ Mie
+                          </div>
+                        </div>
+                        <div class="legend-box__item-song--percent">
+                          45%
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart__legend-box--item">
+                      <div class="legend-box__item-number">2
+                      </div>
+                      <div class="legend-box__item-song">
+                        <div class="legend-box__item-song--thumbnail">
+                          <img src="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/1/8/0/7/1807c6b5fcc7058a14e1a288801221c7.jpg" width="50px">
+                        </div>
+                        <div class="legend-box__item-song--info">
+                          <div class="song__info-title">
+                            Sau Lưng Anh Có Em
+                          </div>
+                          <div class="song__info-subtitle">
+                            Thiều Bảo Trăm
+                          </div>
+                        </div>
+                        <div class="legend-box__item-song--percent">
+                          30%
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart__legend-box--item">
+                      <div class="legend-box__item-number">3
+                      </div>
+                      <div class="legend-box__item-song">
+                        <div class="legend-box__item-song--thumbnail">
+                          <img src="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/2/9/1/b/291b5a81f266d588cf4344766676a140.jpg" width="50px">
+                        </div>
+                        <div class="legend-box__item-song--info">
+                          <div class="song__info-title">
+                            Người Tôi Yêu
+                          </div>
+                          <div class="song__info-subtitle">
+                            Chi Dân
+                          </div>
+                        </div>
+                        <div class="legend-box__item-song--percent">
+                          25%
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart__legend--show-more">
+                      <a href="#">Xem Thêm</a>
+                    </div>
+                </div>
+                <div class="chart__main">
+                  <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                </div>
+              </div>
+              <div class="song-side__chart--overlay"></div>
+            </div>
+          </div>
+          
         </div>
         <div class="song-side__container">
           <div class="song-side__container--personal">
@@ -409,7 +526,7 @@
         </div>
         <div class="song-side__container">
           <div class="song-side__container--slider">
-            <div class="swiper mySwiper">
+            <div class="swiper swiper__banner">
               <!-- Additional required wrapper -->
               <div class="swiper-wrapper">
                 <!-- Slides -->
@@ -554,7 +671,7 @@
     </header>
     <div class="music-play">
       <div class="music-play__left">
-        <div class="music-play__wave">
+        <div class="music-play__wave hide-on-mobile-tablet">
           <div class="music-play__wave-item"></div>
           <div class="music-play__wave-item"></div>
           <div class="music-play__wave-item"></div>
@@ -583,7 +700,7 @@
       </div>
       <div class="music-play__center">
         <div class="music-play__control">
-          <div class="btn btn-repeat">
+          <div class="btn btn-repeat hide-on-mobile">
             <i class="bi bi-arrow-repeat"></i>
           </div>
           <div class="btn btn-prev">
@@ -595,7 +712,7 @@
           <div class="btn btn-next">
             <i class="bi bi-skip-forward"></i>
           </div>
-          <div class="btn btn-random">
+          <div class="btn btn-random hide-on-mobile">
             <i class="bi bi-shuffle"></i>
           </div>
         </div>
@@ -618,7 +735,7 @@
           <audio id="audio" src="" preload="metadata"></audio>
         </div>
       </div>
-      <div class="music-play__right">
+      <div class="music-play__right hide-on-mobile-tablet">
         <div class="music-play__volume">
           <i class="bi bi-volume-down"></i>
           <input

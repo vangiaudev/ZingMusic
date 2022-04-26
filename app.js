@@ -51,6 +51,7 @@ const leftScrollSinger = $('#left-scroll-singer')
 const rightScrollSinger = $('#right-scroll-singer')
 const carouselPlaylist = $('.song-side__playlist .song-side__playlist--carousel')
 const carouselSinger = $('.song-side__singer .song-side__playlist--carousel')
+const carouselNewRelease = $('.swiper__new-release .swiper-wrapper')
 const btnTheme = $('.song-side__heading--theme')
 const modalTheme = $('.theme-modal')
 const btnCloseTheme = $('.theme-modal__heading i')
@@ -124,6 +125,65 @@ const app = {
     ], {
         duration: 8000,
         iterations: Infinity
+    }),
+    swiperNewRelease: setTimeout(() => {
+        new Swiper(".swiper__new-release", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            slidesPerGroup: 3,
+            loop: true,
+            loopFillGroupWithBlank: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                // when window width is >= 320px
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 10
+                },
+                740: {
+                  slidesPerView: 2,
+                  spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                },
+              },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            speed: 1000,
+        })
+    }, 3000),
+    swiperBanner: new Swiper(".swiper__banner", {
+        grabCursor: true,
+        effect: "creative",
+        creativeEffect: {
+          prev: {
+            shadow: true,
+            translate: [0, 0, -400],
+          },
+          next: {
+            translate: ["100%", 0, 0],
+          },
+        },
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        speed: 1000,
     }),
     setConfiguration: (key, value)=>{
         app.configuration[key] = value
@@ -298,7 +358,7 @@ const app = {
     renderCarouselPlaylist: ()=>{
         const htmls = songData.map((song, index)=>{
             return `
-            <a href="." onclick=GoiHam(${index}) class="playlist__carousel-item" id=${index}>
+            <a href="." class="playlist__carousel-item" id=${index}>
                 <div class="playlist__carousel-item--img">
                     <img src=${song.thumbnail} alt="#" />
                     <i class="bi bi-play-circle"></i>
@@ -329,6 +389,29 @@ const app = {
             `
         })
         carouselSinger.innerHTML = htmls.join('')
+    },
+    renderNewRelease: ()=>{
+        const htmls = playlistData.slice().reverse().slice(1).map((item, index)=>{
+            return `
+            <div class="song-side__new-release--item swiper-slide">
+                <div class="song-side__new-release--thumbnail">
+                    <img src=${item.thumbnail}>
+                    <i class="bi bi-play-circle"></i>
+                </div>
+                <div class="song-side__new-release--content">
+                    <div class="new-release__info">
+                        <div class="new-release__info--title">${item.name}</div>
+                        <div class="new-release__info--subtitle">${item.singer}</div>
+                    </div>
+                    <div class="new-release__time">
+                        <div class="new-release__time--rank">#${index+1}</div>
+                        <div class="new-release__time--date">26.04.2022</div>
+                    </div>
+                </div>
+            </div>
+            `
+        })
+        carouselNewRelease.innerHTML = htmls.join('')
     },
     renderPlaylistPersonal: ()=>{
         const htmls = playlistData.map((playlist, index)=>{
@@ -924,6 +1007,7 @@ const app = {
         app.renderPersonalSong()
         app.renderCarouselPlaylist()
         app.renderCarouselSinger()
+        app.renderNewRelease()
         app.renderPlaylistPersonal()
         app.renderAlbumPersonal()
         app.renderMVPersonal()
@@ -1008,7 +1092,7 @@ tabsPersonal.forEach((tab, index)=>{
     tab.onclick = () =>{
         if(index == 0){
             $('.personal__song--animate').style.display='block'
-            $('.personal__song--list').style.width = '70%'
+            $('.personal__song--list').style.width = 'auto'
             $('.personal__song--list').style.overflow = 'hidden'
             $('.personal__song--list').style.overflowY = 'auto'
             $('.container__personal--wrapper-item.active').classList.remove('active')
@@ -1072,33 +1156,6 @@ menuPlaylist.forEach((menu, index)=>{
     }
 })
 
-/*-----AUTO SLIDER-----*/
-var swiper = new Swiper(".mySwiper", {
-    grabCursor: true,
-    effect: "creative",
-    creativeEffect: {
-      prev: {
-        shadow: true,
-        translate: [0, 0, -400],
-      },
-      next: {
-        translate: ["100%", 0, 0],
-      },
-    },
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    autoplay: {
-        delay: 4000,
-        disableOnInteraction: false,
-    },
-    speed: 1000,
-});
 
 /*-----RESPONSIVE-----*/
 btnOpenMenuSide.onclick = () => {
@@ -1107,4 +1164,74 @@ btnOpenMenuSide.onclick = () => {
 }
 btnCloseMenuSide.onclick = () => {
     menuSide.style.display = 'none'
+}
+
+/*-----CHART-----*/
+var xValues = ['17:00','19:00','21:00','23:00','01:00','03:00','05:00','07:00','09:00','11:00', '13:00', '15:00'];
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: 'Đám Cưới Nha', 
+      data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478, 4000, 4800],
+      borderColor: "red",
+      fill: false,
+      backgroundColor: 'rgba(255, 0, 0, 0.6)',
+      pointHoverBackgroundColor: "#fff",
+      hoverBorderColor: "#fff"
+      
+    }, { 
+      label: 'Sau Lưng Anh Có Em', 
+      data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000, 5000, 6600],
+      borderColor: "yellow",
+      fill: false,
+      backgroundColor: 'rgba(216, 250, 8, 0.6)'
+    }, { 
+      label: 'Người Tôi Yêu', 
+      data: [300,700,2000,5000,6000,4000,2000,1000,200,100, 1200, 2000],
+      borderColor: "blue",
+      fill: false,
+      backgroundColor: 'rgba(0, 0, 255, 0.6)'
+    }]
+  },
+  options: {
+    tension: 0.4,
+    plugins: {
+        legend: {
+        display: false
+        },
+        tooltip: {
+        mode: 'index',
+        intersect: false
+        }
+    },
+    hover: {
+        mode: 'nearest',
+        intersect: false
+        }
+    },
+    
+});
+
+const songItemLegend = $$('.chart__legend-box--item');
+songItemLegend.forEach((item, index)=>{
+        item.style.backgroundColor = myChart.data.datasets[index].backgroundColor
+    }
+)
+songItemLegend.forEach((item, index)=>{
+    item.onclick = () =>{
+        toggleData(index)
+    }
+})
+
+toggleData = (value) =>{
+    const visibilityData = myChart.isDatasetVisible(value)
+    if(visibilityData){
+        myChart.hide(value)
+    }
+    else{
+        myChart.show(value)
+    }
 }
