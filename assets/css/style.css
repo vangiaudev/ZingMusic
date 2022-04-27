@@ -968,6 +968,9 @@ header .song-side{
     width: 100%;
 }
 .legend-box__item-song--info .song__info-title{
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text-color);
     display:-webkit-box;
     -webkit-line-clamp:1;
     -webkit-box-orient: vertical;
@@ -1064,7 +1067,7 @@ header .song-side{
 .song-side__container ul{
     list-style: none;
     position: relative;
-    width: 270px;
+    width: auto;
     height: 230px;
     -webkit-tap-highlight-color: transparent;
     align-items: center;
@@ -1590,3 +1593,35 @@ header .song-side{
     display: none;
 }
 
+/*-----FOOTER-----*/
+.song-side__footer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: var(--text-color);
+}
+.footer__title{
+    display: flex;
+    align-items: center;
+}
+.footer__links{
+    width: 100%;
+    text-align: center;
+}
+.footer__links--nav{
+    line-height: 2;
+}
+.links__nav--item{
+    display: inline-block;
+}
+.link-special{
+    position: relative;
+    top: 5px;
+    font-size: 22px;
+    color: #d8d8d8;
+    margin: 0 5px;
+}

@@ -72,12 +72,14 @@ const playlistAPI = 'https://615950a6601e6f0017e5a15b.mockapi.io/api/playlist'
 const videoAPI = 'https://615950a6601e6f0017e5a15b.mockapi.io/api/videos'
 const songUSUKAPI = 'https://6260ea02f429c20deb979e8a.mockapi.io/USUK'
 const songEDMAPI = 'https://6260ea02f429c20deb979e8a.mockapi.io/EDM'
+const rankTableAPI = 'https://mp3.zing.vn/xhr/chart-realtime?songId=0&videoId=0&albumId=0&chart=song&time=-1'
 var songData = []
 var singerData = []
 var playlistData = []
 var videoData = []
 var songDataUSUK = []
 var songDataEDM = []
+var rankTableData = []
 
 getData = (api) =>{
     return new Promise((resolve, reject)=>{
@@ -98,14 +100,15 @@ getData = (api) =>{
     })
 }
 
-Promise.all([getData(songAPI), getData(singerAPI), getData(playlistAPI), getData(videoAPI), getData(songUSUKAPI), getData(songEDMAPI)])
-.then(([songs, singers, playlists, videos, songsUSUK, songsEDM]) =>{
+Promise.all([getData(songAPI), getData(singerAPI), getData(playlistAPI), getData(videoAPI), getData(songUSUKAPI), getData(songEDMAPI), getData(rankTableAPI)])
+.then(([songs, singers, playlists, videos, songsUSUK, songsEDM, ranksTable]) =>{
     songData = JSON.parse(songs)
     singerData = JSON.parse(singers)
     playlistData = JSON.parse(playlists)
     videoData = JSON.parse(videos)
     songDataUSUK = JSON.parse(songsUSUK)
     songDataEDM = JSON.parse(songsEDM)
+    rankTableData = JSON.parse(ranksTable)
 })
 .then(()=>app.start())
 .catch((err)=>alert(err))
@@ -141,15 +144,18 @@ const app = {
                 // when window width is >= 320px
                 320: {
                   slidesPerView: 1,
-                  spaceBetween: 10
+                  spaceBetween: 10,
+                  slidesPerGroup: 1,
                 },
                 740: {
                   slidesPerView: 2,
-                  spaceBetween: 20
+                  spaceBetween: 20,
+                  slidesPerGroup: 2
                 },
                 1024: {
                     slidesPerView: 3,
-                    spaceBetween: 30
+                    spaceBetween: 30,
+                    slidesPerGroup: 3
                 },
               },
             autoplay: {
@@ -211,7 +217,7 @@ const app = {
             get: ()=>(songData[app.currentIndex])
         })
         Object.defineProperty(app, 'currentPlaylist', {
-            get: ()=>(playlistData[app.currentIndex])
+            get: ()=>(rankTableData.data.song[app.currentIndex])
         })
         Object.defineProperty(app, 'currentSongUSUK', {
             get: ()=>(songDataUSUK[app.currentIndex])
@@ -253,21 +259,22 @@ const app = {
         themeModal.innerHTML = htmls
     },
     renderMenuSong: ()=>{
-        const htmls = playlistData.map((song, index)=>{
+        
+        const htmls = rankTableData.data.song.map((item, index)=>{
             return `
             <div class="menu-side__song-item ${app.currentIndex === index ? 'active' : ''}" data-index="${index}">
-                <div class="menu-side__song-item--number">${song.id <= 9 ? '0' + song.id : song.id }</div>
+                <div class="menu-side__song-item--number">${item.order}</div>
                 <div class="menu-side__song-item--image">
                     <div class="music-play__wave active">
                         <div class="music-play__wave-item"></div>
                         <div class="music-play__wave-item"></div>
                         <div class="music-play__wave-item"></div>
                     </div>
-                    <img src=${song.thumbnail} />
+                    <img src=${item.thumbnail} />
                 </div>
                 <div class="menu-side__song-item--info">
-                    <div class="song-item--title">${song.name}</div>
-                    <div class="song-item--singer">${song.singer}</div>
+                    <div class="song-item--title">${item.name}</div>
+                    <div class="song-item--singer">${item.artists_names}</div>
                 </div>
                 <div class="menu-side__song-item--play">
                     <i class="bi bi-play-circle-fill"></i>
@@ -506,9 +513,9 @@ const app = {
         else{
             app.currentPlaylist = 0
             songTitle.innerText = app.currentPlaylist.name
-            songSinger.innerText = app.currentPlaylist.singer
+            songSinger.innerText = app.currentPlaylist.artists_names
             cdThumb.style.backgroundImage = `url('${app.currentPlaylist.thumbnail}')`
-            audio.src = app.currentPlaylist.path
+            audio.src = `http://api.mp3.zing.vn/api/streaming/audio/${app.currentPlaylist.id}/320`
         }
     
     },
@@ -1189,7 +1196,7 @@ const myChart = new Chart(ctx, {
       fill: false,
       backgroundColor: 'rgba(216, 250, 8, 0.6)'
     }, { 
-      label: 'Người Tôi Yêu', 
+      label: 'Người Tôi Yêu Chẳng Hề Yêu Tôi', 
       data: [300,700,2000,5000,6000,4000,2000,1000,200,100, 1200, 2000],
       borderColor: "blue",
       fill: false,
