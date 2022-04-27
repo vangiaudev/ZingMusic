@@ -1614,6 +1614,8 @@ header .song-side{
 }
 .footer__links--nav{
     line-height: 2;
+    width: 100% !important;
+    height: auto !important;
 }
 .links__nav--item{
     display: inline-block;
