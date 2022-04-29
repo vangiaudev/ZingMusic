@@ -36,6 +36,7 @@ const albumPersonal = $('.container__personal--wrapper-item .song-side__playlist
 const mvPersonal = $('.song-side__playlist--carousel.mv')
 const singerPersonal = $('.song-side__playlist--carousel.singer')
 const video = $('.playlist__mv-item--video')
+const chartLegendBox = $('.chart__legend-box')
 
 const songSide = $('.song-side')
 const bannerTitle = $('.song-side__banner--title')
@@ -479,6 +480,36 @@ const app = {
         })
         mvPersonal.innerHTML = htmls.join('')
     },
+    renderZingChart: ()=>{
+        const htmls = rankTableData.data.song.slice(0, 3).map((item, index)=>{
+            return `
+            <div class="chart__legend-box--item">
+                <div class="legend-box__item-number">1
+                </div>
+                <div class="legend-box__item-song">
+                    <div class="legend-box__item-song--thumbnail">
+                        <img src=${item.thumbnail} width="50px">
+                    </div>
+                    <div class="legend-box__item-song--info">
+                        <div class="song__info-title">
+                            ${item.title}
+                        </div>
+                        <div class="song__info-subtitle">
+                            ${item.artists_names}
+                        </div>
+                    </div>
+                    <div class="legend-box__item-song--percent">
+                    ${item.total}
+                    </div>
+                </div>
+            </div>
+            `
+        })
+        const btnElement = `<div class="chart__legend--show-more">
+                                <a href="#">Xem Thêm</a>
+                            </div>`
+        chartLegendBox.innerHTML = htmls.concat(btnElement).join('')
+    },
     handleHoverVideo: ()=>{
         Array.from($$('.playlist__mv-item--video video')).forEach((item, index)=>{
             item.onmouseover = () =>{
@@ -488,6 +519,75 @@ const app = {
                 item.controls = false
             }
         })
+    },
+    loadZingChart: () =>{
+        var xValues = ['17:00','19:00','21:00','23:00','01:00','03:00','05:00','07:00','09:00','11:00', '13:00', '15:00'];
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+            label: rankTableData.data.song[0].title, 
+            data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478, 4000, 4800],
+            borderColor: "red",
+            fill: false,
+            backgroundColor: 'rgba(255, 0, 0, 0.6)',
+            pointHoverBackgroundColor: "#fff",
+            hoverBorderColor: "#fff"
+            
+            }, { 
+            label: rankTableData.data.song[1].title, 
+            data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000, 5000, 6600],
+            borderColor: "yellow",
+            fill: false,
+            backgroundColor: 'rgba(216, 250, 8, 0.6)'
+            }, { 
+            label: rankTableData.data.song[2].title, 
+            data: [300,700,2000,5000,6000,4000,2000,1000,200,100, 1200, 2000],
+            borderColor: "blue",
+            fill: false,
+            backgroundColor: 'rgba(0, 0, 255, 0.6)'
+            }]
+        },
+        options: {
+            tension: 0.4,
+            plugins: {
+                legend: {
+                display: false
+                },
+                tooltip: {
+                mode: 'index',
+                intersect: false
+                }
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false
+                }
+            },
+            
+        });
+        const songItemLegend = $$('.chart__legend-box--item')
+        songItemLegend.forEach((item, index)=>{
+                item.style.backgroundColor = myChart.data.datasets[index].backgroundColor
+            }
+        )
+        songItemLegend.forEach((item, index)=>{
+            item.onclick = () =>{
+                toggleData(index)
+            }
+        })
+
+        toggleData = (value) =>{
+            const visibilityData = myChart.isDatasetVisible(value)
+            if(visibilityData){
+                myChart.hide(value)
+            }
+            else{
+                myChart.show(value)
+            }
+        }
     },
     loadCurrentSong:() =>{
         if(app.isPlayPersonalSong){
@@ -1018,7 +1118,9 @@ const app = {
         app.renderPlaylistPersonal()
         app.renderAlbumPersonal()
         app.renderMVPersonal()
+        app.renderZingChart()
         app.loadCurrentSong()
+        app.loadZingChart()
         app.handleEvent()
         app.selectTheme()
         app.selectSongPlaylist()
@@ -1173,72 +1275,5 @@ btnCloseMenuSide.onclick = () => {
     menuSide.style.display = 'none'
 }
 
-/*-----CHART-----*/
-var xValues = ['17:00','19:00','21:00','23:00','01:00','03:00','05:00','07:00','09:00','11:00', '13:00', '15:00'];
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-  type: "line",
-  data: {
-    labels: xValues,
-    datasets: [{
-      label: 'Đám Cưới Nha', 
-      data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478, 4000, 4800],
-      borderColor: "red",
-      fill: false,
-      backgroundColor: 'rgba(255, 0, 0, 0.6)',
-      pointHoverBackgroundColor: "#fff",
-      hoverBorderColor: "#fff"
-      
-    }, { 
-      label: 'Sau Lưng Anh Có Em', 
-      data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000, 5000, 6600],
-      borderColor: "yellow",
-      fill: false,
-      backgroundColor: 'rgba(216, 250, 8, 0.6)'
-    }, { 
-      label: 'Người Tôi Yêu Chẳng Hề Yêu Tôi', 
-      data: [300,700,2000,5000,6000,4000,2000,1000,200,100, 1200, 2000],
-      borderColor: "blue",
-      fill: false,
-      backgroundColor: 'rgba(0, 0, 255, 0.6)'
-    }]
-  },
-  options: {
-    tension: 0.4,
-    plugins: {
-        legend: {
-        display: false
-        },
-        tooltip: {
-        mode: 'index',
-        intersect: false
-        }
-    },
-    hover: {
-        mode: 'nearest',
-        intersect: false
-        }
-    },
-    
-});
 
-const songItemLegend = $$('.chart__legend-box--item');
-songItemLegend.forEach((item, index)=>{
-        item.style.backgroundColor = myChart.data.datasets[index].backgroundColor
-    }
-)
-songItemLegend.forEach((item, index)=>{
-    item.onclick = () =>{
-        toggleData(index)
-    }
-})
 
-toggleData = (value) =>{
-    const visibilityData = myChart.isDatasetVisible(value)
-    if(visibilityData){
-        myChart.hide(value)
-    }
-    else{
-        myChart.show(value)
-    }
-}
