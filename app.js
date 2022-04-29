@@ -484,7 +484,7 @@ const app = {
         const htmls = rankTableData.data.song.slice(0, 3).map((item, index)=>{
             return `
             <div class="chart__legend-box--item">
-                <div class="legend-box__item-number">1
+                <div class="legend-box__item-number">${item.position}
                 </div>
                 <div class="legend-box__item-song">
                     <div class="legend-box__item-song--thumbnail">
