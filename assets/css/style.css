@@ -965,7 +965,7 @@ header .song-side{
 .legend-box__item-song--info{
     padding: 10px;
     font-size: 14px;
-    width: 100px;
+    width: 100%;
 }
 .legend-box__item-song--info .song__info-title{
     font-weight: 600;
@@ -979,6 +979,7 @@ header .song-side{
     word-break: break-word;
 }
 .song__info-subtitle{
+    width: 100px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;   
