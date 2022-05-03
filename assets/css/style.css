@@ -978,7 +978,11 @@ header .song-side{
     text-overflow: ellipsis;
     word-break: break-word;
 }
-
+.song__info-subtitle{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   
+}
 .legend-box__item-song--percent{
     font-size: 18px;
     font-weight: 700;
