@@ -589,6 +589,69 @@ header .song-side{
     border: none;
     margin-right: 10px;
 }
+
+.search__result{
+    width: 24%;
+    max-height: 200px;
+    z-index: 100;
+    position: fixed;
+    left: 52%;
+    top: 60px;
+    border-radius:10px;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content: flex-start;
+    overflow: auto;
+    background-color: var(--theme-modal-bg);
+}
+.search__result::-webkit-scrollbar{
+    display: none;
+}
+.search__result--item{
+    width: 100%;
+    min-height: 50px;
+    border-radius:inherit;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+.result__item--img{
+    margin-right: 10px;
+}
+.result__item--img img{
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+}
+.result__item--content{
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: left;
+    align-self: center;
+    width: 0;
+    
+}
+.result__item--content .content__title, .content__subtitle{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+    line-height: normal;
+}
+.result__item--content .content__title{
+    font-size: 14px;
+    color: var(--text-color);
+   
+}
+.result__item--content .content__subtitle{
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--sub-text-color);
+
+}
 .song-side__heading--right{
     display: flex;
     width: 30%;

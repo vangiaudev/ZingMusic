@@ -75,7 +75,7 @@
               <li class="tab-item">Cá nhân</li>
               <li class="tab-item">Khám phá</li>
             </ul>
-            <form class="song-side__heading--search">
+            <div class="song-side__heading--search">
               <div class="mobile__heading--menu">
                 <i class="bi bi-music-note-list"></i>
               </div>
@@ -84,21 +84,24 @@
                   src="./assets/img/logo_name.svg" 
                   alt="Zing MP3">
               </div>
-              <div class="search__container">
+              <div class="search__container" action="ac.mp3.zing.vn/complete">
                 <div class="search-btn">
                   <i class="bi bi-search"></i>
                 </div>
                 <input
                   class="hide-on-mobile-tablet"
-                  type="search"
+                  type="text"
                   name="search-song"
                   id="search-song"
                   placeholder="Nhập tên bài hát"
+                  spellCheck={false}
+                  autocomplete="off"
                 />
               </div>
               
-            </form>
+            </div>
           </nav>
+          
           <nav class="song-side__heading--right">
             <div class="song-side__heading--theme">
               <img src="./assets/img/icon_theme.svg" alt="Theme" />
@@ -113,7 +116,23 @@
             </div>
           </nav>
         </header>
-
+        <div class="search__result">
+            <!-- <a href="" class="search__result--item">
+              <div class="result__item--img">
+                <img src="./assets/img/album_image.jpg" alt="Song Image">
+              </div>
+              <div class="result__item--content">
+                <h3 class="content__title">
+                  Hoa Bằng Lăng Remix
+                </h3>
+                <h4 class="content__subtitle">
+                  Nguyễn Văn Giàu
+                </h4>
+              </div>
+            </a> -->
+            
+        </div>
+        
         <div class="song-side__container active">
           <div class="song-side__banner">
             <div class="song-side__banner--title">

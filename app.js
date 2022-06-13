@@ -65,6 +65,8 @@ const leftScrollMVPersonal = $('.mv-personal .bi-arrow-left')
 const rightScrollMVPersonal = $('.mv-personal .bi-arrow-right')
 const leftScrollSingerPersonal = $('.singer-personal .bi-arrow-left')
 const rightScrollSingerPersonal = $('.singer-personal .bi-arrow-right')
+const searchContainer = $('.search__result');
+const searchInput = $('#search-song');
 
 const PLAYER_STORAGE_KEY = 'ZING_MP3_DEVELOPER'
 const songAPI = 'https://615950a6601e6f0017e5a15b.mockapi.io/api/songs'
@@ -112,6 +114,7 @@ Promise.all([getData(songAPI), getData(singerAPI), getData(playlistAPI), getData
     rankTableData = JSON.parse(ranksTable)
 })
 .then(()=>app.start())
+.then(()=>console.log(rankTableData.data.song.length))
 .catch((err)=>alert(err))
 
 const app = {
@@ -1104,7 +1107,57 @@ const app = {
         btnRepeat.classList.toggle('active', app.isRepeat)
         btnRandom.classList.toggle('active', app.isRandom)
     },
+    renderSearchResult: (data) =>{
+        const htmls = data.map((item, index)=>{
+            return `
+            <a href="#${index}" class="search__result--item">
+              <div class="result__item--img">
+                <img src=${item.thumbnail} alt="Song Image">
+              </div>
+              <div class="result__item--content">
+                <h3 class="content__title">
+                  ${item.name}
+                </h3>
+                <h4 class="content__subtitle">
+                    ${item.artists_names}
+                </h4>
+              </div>
+            </a>`
+        })
+        searchContainer.innerHTML = htmls.join('')  
+    },
+    onSearch: ()=>{
+        
+        searchInput.addEventListener('keyup', (e)=>{
+          
+            if(searchInput.value.trim().length > 0){
+                searchContainer.style.display = 'flex'
+                var dataRender = app.handleSearch(e.target.value, rankTableData.data.song)
+                app.renderSearchResult(dataRender)
+            }
+            else{
+                searchContainer.style.display = 'none'
+            }
+        })
+        songSide.onclick = () =>{
+            searchContainer.style.display = 'none'
+        }
+    
+        
+    },
+    handleSearch: (value, data) =>{
+        var result = []
+        for(var i = 0; i<data.length; i++){
+            value = value.toLowerCase()
+            var name = data[i].name.toLowerCase()
+            if(name.includes(value)){
+                result.push(data[i])
+            }
+        }
+        return result
+    },
     start: ()=>{
+        app.onSearch()
         app.loadConfiguration()
         app.defineProperties()
         app.renderTheme()
@@ -1274,6 +1327,8 @@ btnOpenMenuSide.onclick = () => {
 btnCloseMenuSide.onclick = () => {
     menuSide.style.display = 'none'
 }
+
+
 
 
 
