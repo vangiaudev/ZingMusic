@@ -69,7 +69,7 @@ const searchContainer = $('.search__result');
 const searchInput = $('#search-song');
 
 const PLAYER_STORAGE_KEY = 'ZING_MP3_DEVELOPER'
-const songAPI = 'https://615950a6601e6f0017e5a15b.mockapi.io/api/songs'
+const songAPI = 'https://651128b1829fa0248e3f9479.mockapi.io/api/songs'
 const singerAPI = 'https://615950a6601e6f0017e5a15b.mockapi.io/api/singers'
 const playlistAPI = 'https://615950a6601e6f0017e5a15b.mockapi.io/api/playlist'
 const videoAPI = 'https://615950a6601e6f0017e5a15b.mockapi.io/api/videos'
